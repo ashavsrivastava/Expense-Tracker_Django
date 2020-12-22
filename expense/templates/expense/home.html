@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home - Expense Tracker
+{% endblock %}
+
+
+{% block content %}
+   <div class="container mt-5 mb-5 bg-dark text-white w-50">
+    <div class="pt-2">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">This Month</a>
+                <a class="nav-item nav-link" href="{% url 'analysis' %}"><i class="fa fa-line-chart" style="font-size:22px;" aria-hidden="true"></i></a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            
+                <div class="row">
+                    <div class="col-7 mt-2">
+                        <h2>Expense Tracker</h2>
+                    </div>
+                    <div class="col-5 mt-3 text-right">
+                        <p><strong>YOUR BALANCE: RS <span>{{ balance }}</span></strong></p>
+                    </div>
+                </div>
+
+                <hr/>
+            
+                <div class="row">
+                    <div class="col-6 text-left"><strong>INCOME:<span id="income"> RS {{ income }}</span></strong></div>
+                    <div class="col-6 text-right"><strong>EXPENSE: <span id="exp">RS {{ exp }}</span></strong></div>
+                </div>
+            
+            
+            </div>
+
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                 <div class="row">
+                    <div class="col-8 mt-2">
+                        <h2><strong> {{ month}}</strong></h2>
+                    </div>
+                    <div class="col-4 mt-3 text-right">
+                        <strong>YOUR BALANCE: RS <span>{{ monthbal }}</span></strong>
+                        <small class="text-info">Previous Remaining: RS {{remaining }} </small>
+                    </div>
+                </div>
+
+                <hr/>
+            
+                <div class="row">
+                    <div class="col-6 text-left"><strong>INCOME:<span id="income"> RS {{ monthinc }}</span></strong></div>
+                    <div class="col-6 text-right"><strong>EXPENSE: <span id="exp">RS {{ monthexp }}</span></strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+       
+       <br/>
+       
+       <div class="row">
+           <div class="col-8 text-left">
+               <h4>Recent History</h4>
+           </div>
+           <div class="col-4 text-right">
+            <a href="{% url 'history' %}" title="view all history"><i class="fa fa-history mr-2" style="font-size:24px;"></i></a>
+           </div>
+
+           <hr color="white"/>
+       </div>
+        <hr color="white"/>
+       <table class="table table-borderless table-dark table-hover table-sm">
+        <thead>
+          <tr class="table-active">
+            <th scope="col">Date</th>
+            <th scope="col">Transaction Name</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for transaction in expense.all %}
+          <tr>
+            <td> {{ transaction.datepretty }}</td>
+            <td>{{ transaction.transaction_name }}</td>
+            <td class="text-left">{{ transaction.amount }}</td>
+            <div><td class="text-right sign">{{ transaction.sign }}</td></div>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+       
+       <br/>
+       <div class="row">
+           <div class="col text-left">
+             <h4>Add new transaction</h4>
+           </div>
+           <div class="col text-right pt-1 mr-2">
+            <h4><i class="fa fa-plus"></i></h4>
+           </div>
+
+       </div>
+       <div class="row fademessage">
+            <div class="col">
+                {% if error %}
+                    <div class="alert alert-warning text-center" role="alert"><strong>{{ error }}</strong></div>
+                {% endif %}
+            </div>
+        </div>
+
+        <hr color="white"/>
+        <div class="floating inputview">
+            <form method="POST" action="{% url 'home' %}">
+                {% csrf_token %}
+                <div class="row">
+                        <div class="col-6 text-left">
+                                <label>Transaction Name</label>
+                                <input type="text" class="form-control inputview" placeholder="e.g Bought Book" name="transaction_name">
+                        </div>
+
+                        <div class="col-6 text-left">
+                            <label>Amount(+ for income, - for expense)</label>
+                            <input type="text" class="form-control inputview" placeholder="e.g -250" name="amount">
+                        </div>
+                    
+
+                </div>
+
+                        <br/>
+                        <div class="row">
+                            <div class="col text-center">
+                                <button class="btn btn-outline-success">Submit</button>
+                            </div>
+                        </div>
+                </form>
+
+        </div>
+       <br/>
+   </div>
+
+{% endblock %}

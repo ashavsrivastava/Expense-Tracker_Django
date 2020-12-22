@@ -1,0 +1,68 @@
+body{
+    font-family: 'Consolas',sans-serif;
+    background: black;  /* fallback for old browsers */
+}
+
+.trash {
+    margin-right: 0px;
+    text-align: center;
+    width: 0;
+    display: inline-block;
+    transition: 0.2s linear;
+    opacity:0;
+    cursor: pointer;
+}
+
+tbody:hover {
+    cursor:pointer;
+}
+
+tr:hover .trash{
+    width:20px;
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.listtext {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.inputview{
+    display: none;
+     transition: linear;
+ }
+ 
+
+ #income{
+     color:#18d17b;
+ }
+
+
+ #exp{
+     color:#FF0000;
+ }
+
+ .plussign{
+    background:#18d17b;
+    color:#18d17b;
+    background-clip: content-box;
+    
+ }
+ .minussign{
+     color: #B22222;
+     background: #B22222;
+     background-clip: content-box;
+
+ }
+
+a{
+    color: white;
+}
+
+a:hover{
+    color:white;
+}
+.fa-plus{
+    cursor: pointer;
+}
