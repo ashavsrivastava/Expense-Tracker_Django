@@ -50,9 +50,10 @@ def analysis(request):
     X = X.reshape([-1,1])
     #use linear regression from sklearn
     model = LinearRegression()
+  
     model.fit(X,Y)
     
-    #print(model.score(X,Y))
+    print(model.score(X,Y))
     
     ypredicts = model.predict(X)
     #for 10 days prediction
@@ -96,7 +97,7 @@ def analysis(request):
     plot1.line(x='date',y = 'amount',line_width=1,legend_label="Daily Basis Income And Expense",source=source)
     plot1.circle(x='date',y='amount',fill_color='white',size=8,legend_label="Daily Basis Income And Expense",source=source)
     
-    # plot1.xaxis.formatter=DatetimeTickFormatter(days="%Y/%m/%d")
+    plot1.xaxis.formatter=DatetimeTickFormatter(days="%Y/%m/%d")
    
     plot1.add_tools(HoverTool(tooltips=[
         ("date","@datestr"),
@@ -116,7 +117,7 @@ def analysis(request):
     
     #print(dfpredict)
     plot2.line(x=dfcopy.index,y=remaining,line_color="red",line_width=5,legend_label="Actual Data")
-    plot2.line(x=dfcopy.index,y=ypredicts,line_color="green",line_width=3,legend_label="predicted Data",line_dash="dashed")
+    plot2.line(x=dfcopy.index,y=ypredicts,line_color="green",line_width=3,legend_label="predicted Data",line_dash="dotted")
     script2,div2 = components(plot2)
     
     #lets zip for using two variables in jinja
